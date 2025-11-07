@@ -1,0 +1,19 @@
+# 가상환경/캐시
+.venv/
+__pycache__/
+*.py[cod]
+
+# 로컬 DB/정적/미디어
+db.sqlite3
+media/
+staticfiles/
+
+# VSCode
+.vscode/
+
+# Git
+.git
+.gitignore
+
+# 기타
+*.log
