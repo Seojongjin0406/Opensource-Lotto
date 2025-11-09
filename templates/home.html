@@ -1,7 +1,20 @@
-<!DOCTYPE html>
-<html><body>
-  <h1>로또 홈</h1>
-  <a href="{% url 'buy_lotto' %}">사용자 페이지</a> |
-  <a href="/admin/">관리자 로그인</a> |
-  <a href="{% url 'results_admin' %}">관리자 통계/추첨</a>
-</body></html>
+{% extends "base.html" %}
+{% block title %}홈 - 로또{% endblock %}
+{% block content %}
+<div class="card shadow-sm card-rounded">
+  <div class="card-body p-5">
+    <h1 class="fw-bold mb-3">로또 홈</h1>
+    <p class="text-secondary mb-4">사용자는 번호를 구매하고, 관리자는 당첨번호를 생성합니다.</p>
+    <div class="mb-3">
+      {% if latest %}
+        <span class="badge bg-primary">최근 회차: {{ latest.round_no }}회차 ({{ latest.draw_date }})</span>
+      {% else %}
+        <span class="badge bg-secondary">회차가 없습니다</span>
+      {% endif %}
+    </div>
+    <a class="btn btn-primary me-2" href="{% url 'buy_lotto' %}">사용자 구매</a>
+    <a class="btn btn-outline-secondary me-2" href="{% url 'results_user' %}">내 결과</a>
+    <a class="btn btn-success" href="{% url 'results_admin' %}">관리자 통계/추첨</a>
+  </div>
+</div>
+{% endblock %}

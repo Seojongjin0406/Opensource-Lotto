@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}관리자 - 로또{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm card-rounded">
+      <div class="card-body">
+        <h4 class="mb-3">당첨번호</h4>
+        {% if winning %}
+          <div class="alert alert-success">
+            <b>{{ latest_round.round_no }}회차</b><br>
+            당첨번호: {{ winning.numbers }} + 보너스({{ winning.bonus }})<br>
+            <small class="text-secondary">재추첨 불가</small>
+          </div>
+        {% else %}
+          <form method="post" action="{% url 'admin_draw' %}">
+            {% csrf_token %}
+            <div class="mb-2">
+              <label class="form-label">회차 선택</label>
+              <select name="round_no" class="form-select" required>
+                {% for r in rounds %}
+                  <option value="{{ r.round_no }}">{{ r.round_no }}회차 ({{ r.draw_date }})</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button class="btn btn-success w-100">선택 회차 당첨번호 추첨 (1회)</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm card-rounded">
+      <div class="card-body">
+        <h4 class="mb-3">최근 사용자 티켓</h4>
+        <div class="table-responsive">
+          <table class="table table-striped align-middle">
+            <thead class="table-light">
+              <tr><th>회차</th><th>이름</th><th>번호</th><th>등수/상태</th><th>시간</th></tr>
+            </thead>
+            <tbody>
+              {% for t in tickets %}
+                <tr>
+                  <td>{{ t.round.round_no }}</td>
+                  <td>{{ t.name }}</td>
+                  <td class="font-monospace">{{ t.numbers }}</td>
+                  <td>{{ t.match_status }}</td>
+                  <td>{{ t.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="5" class="text-center text-secondary py-4">데이터 없음</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <a class="btn btn-outline-secondary" href="{% url 'home' %}">홈</a>
+        <a class="btn btn-outline-primary" href="/admin/">Django Admin</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

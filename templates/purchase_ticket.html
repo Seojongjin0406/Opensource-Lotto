@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}구매 - 로또{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card shadow-sm card-rounded">
+      <div class="card-body p-4">
+        <h2 class="mb-3">로또 구매</h2>
+
+        <form method="post" id="lottoForm" class="needs-validation" novalidate>
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">회차</label>
+            <select name="round_no" class="form-select" required>
+              {% for r in rounds %}
+                <option value="{{ r.round_no }}">{{ r.round_no }}회차 ({{ r.draw_date }})</option>
+              {% endfor %}
+            </select>
+            <div class="invalid-feedback">회차를 선택하세요.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">이름</label>
+            <input type="text" name="name" class="form-control" required>
+            <div class="invalid-feedback">이름을 입력하세요.</div>
+          </div>
+
+          <div class="mb-2">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="mode" id="modeManual" value="manual" checked>
+              <label class="form-check-label" for="modeManual">수동</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="mode" id="modeAuto" value="auto">
+              <label class="form-check-label" for="modeAuto">자동</label>
+            </div>
+          </div>
+
+          <div id="manualInputs" class="row g-2 mb-3">
+            {% for i in "123456" %}
+              <div class="col-4 col-md-2">
+                <input type="number" name="n{{ forloop.counter }}" class="form-control text-center" min="1" max="45">
+              </div>
+            {% endfor %}
+            <div class="form-text">1~45 사이 중복 없는 6개</div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">제출</button>
+            <a href="{% url 'results_user' %}" class="btn btn-outline-secondary">내 결과 보기</a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Bootstrap validation
+  (function() {
+    const form = document.getElementById('lottoForm');
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) { e.preventDefault(); e.stopPropagation(); }
+      form.classList.add('was-validated');
+    }, false);
+  })();
+
+  // auto/manual toggle
+  const form = document.getElementById('lottoForm');
+  const manualInputs = form.querySelectorAll('#manualInputs input[type="number"]');
+  function updateFields() {
+    const mode = form.querySelector('input[name="mode"]:checked').value;
+    const isManual = mode === 'manual';
+    manualInputs.forEach(inp => {
+      inp.required = isManual;
+      inp.disabled = !isManual;
+      if (!isManual) inp.value = '';
+    });
+  }
+  form.querySelectorAll('input[name="mode"]').forEach(r => r.addEventListener('change', updateFields));
+  updateFields();
+</script>
+{% endblock %}
