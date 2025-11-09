@@ -21,13 +21,14 @@
 ### 1) 프로젝트 다운로드
 
 #### ✅ Git Clone (추천)
-```bash
+
 git clone https://github.com/Seojongjin0406/Opensource-Lotto.git
 cd Opensource-Lotto
 또는 ZIP 다운로드
 GitHub → Code → Download ZIP
 
 압축 해제 후 폴더로 이동
+
 
 🖥 로컬 실행 (Python)
 요구사항
@@ -64,6 +65,7 @@ python manage.py createsuperuser
 bash
 코드 복사
 python manage.py runserver
+
 🌐 접속 URL 안내
 주소	설명
 http://127.0.0.1:8000/	홈 화면
@@ -71,6 +73,7 @@ http://127.0.0.1:8000/buy/	사용자 로또 구매
 http://127.0.0.1:8000/results/	내 결과 확인
 http://127.0.0.1:8000/results-admin/	관리자 대시보드
 http://127.0.0.1:8000/admin/	Django Admin 로그인
+
 
 🐳 Docker 실행
 ① 이미지 빌드
