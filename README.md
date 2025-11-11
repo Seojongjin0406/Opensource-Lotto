@@ -25,7 +25,7 @@ cd Opensource-Lotto
 GitHub → Code → Download ZIP → 압축 해제 후 폴더 이동
 
 
-🖥 로컬 실행 (Python 방식)
+🖥 로컬 실행 (내 개발 방식)
 -------------------------------------------------------------------------------------------------------------------------------------
 ✅ 실행 요구사항
 
@@ -56,19 +56,14 @@ python manage.py shell -c "from lotto.models import DrawRound; [DrawRound.object
 ⑤ 서버 실행
 python manage.py runserver
 -----------------------------------------------------------------------------------------------------------------------------------
+
+
 🐳 Docker 실행
-① 이미지 빌드
-docker build -t opensource-lotto:dev .
-
-② 컨테이너 실행
-docker run -d --name lotto_dev -p 8000:8000 opensource-lotto:dev
-
-③ 컨테이너 내부 초기 설정 (최초 1회만)
-docker exec -it lotto_dev bash
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py shell -c "from lotto.models import DrawRound; [DrawRound.objects.get_or_create(round_no=i) for i in range(1,6)]"
-exit
-
+# 프로젝트 최초 실행
+git clone https://github.com/Seojongjin0406/Opensource-Lotto
+cd Opensource-Lotto
+docker compose up -d --build
+docker compose exec web python manage.py migrate --noinput
+docker compose exec web python manage.py createsuperuser
 ④ 접속
 http://localhost:8000
