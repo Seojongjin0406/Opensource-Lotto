@@ -31,18 +31,18 @@
               <td>{{ t.name }}</td>
               <td class="font-monospace">{{ t.numbers }}</td>
               <td>
-                {% if t.match_status == "1등" %}
-                  <span class="badge bg-danger">{{ t.match_status }}</span>
-                {% elif t.match_status == "2등" %}
-                  <span class="badge bg-warning text-dark">{{ t.match_status }}</span>
-                {% elif t.match_status == "3등" %}
-                  <span class="badge bg-info text-dark">{{ t.match_status }}</span>
-                {% elif t.match_status == "4등" or t.match_status == "5등" %}
-                  <span class="badge bg-primary">{{ t.match_status }}</span>
-                {% elif t.match_status == "미추첨" %}
-                  <span class="badge bg-secondary">{{ t.match_status }}</span>
+                {% if t.result_rank == "1등" %}
+                  <span class="badge bg-danger">{{ t.result_rank }}</span>
+                {% elif t.result_rank == "2등" %}
+                  <span class="badge bg-warning text-dark">{{ t.result_rank }}</span>
+                {% elif t.result_rank == "3등" %}
+                  <span class="badge bg-info text-dark">{{ t.result_rank }}</span>
+                {% elif t.result_rank == "4등" or t.result_rank == "5등" %}
+                  <span class="badge bg-primary">{{ t.result_rank }}</span>
+                {% elif t.result_rank == "미추첨" %}
+                  <span class="badge bg-secondary">{{ t.result_rank }}</span>
                 {% else %}
-                  <span class="badge bg-light text-dark border">{{ t.match_status }}</span>
+                  <span class="badge bg-light text-dark border">{{ t.result_rank }}</span>
                 {% endif %}
               </td>
               <td>{{ t.created_at|date:"Y-m-d H:i" }}</td>

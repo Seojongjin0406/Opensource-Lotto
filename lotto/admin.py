@@ -8,7 +8,7 @@ class DrawRoundAdmin(admin.ModelAdmin):
 
 @admin.register(WinningSet)
 class WinningSetAdmin(admin.ModelAdmin):
-    list_display = ("round", "numbers", "bonus")
+    list_display = ("round", "numbers", "bonus", "created_at")
     search_fields = ("round__round_no", "numbers")
 
 @admin.register(UserTicket)

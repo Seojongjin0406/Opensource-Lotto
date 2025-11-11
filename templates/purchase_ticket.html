@@ -14,7 +14,7 @@
             <label class="form-label">회차</label>
             <select name="round_no" class="form-select" required>
               {% for r in rounds %}
-                <option value="{{ r.round_no }}">{{ r.round_no }}회차 ({{ r.draw_date }})</option>
+                <option value="{{ r.round_no }}">{{ r.round_no }}회차</option>
               {% endfor %}
             </select>
             <div class="invalid-feedback">회차를 선택하세요.</div>

@@ -7,13 +7,14 @@ class DrawRound(models.Model):
     draw_date = models.DateTimeField(default=timezone.now, verbose_name="추첨일")
 
     class Meta:
-        db_table = "lotto_round"         
+        db_table = "lotto_round"
         ordering = ["-round_no"]
         verbose_name = "추첨 회차"
         verbose_name_plural = "추첨 회차"
 
     def __str__(self):
         return f"{self.round_no}회차"
+
 
 class WinningSet(models.Model):
     round = models.OneToOneField(
@@ -27,14 +28,17 @@ class WinningSet(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(45)],
         verbose_name="보너스"
     )
+    # Admin/뷰 어디서 생성해도 자동 세팅
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="생성 시각")
 
     class Meta:
-        db_table = "lotto_winningnumber"  
+        db_table = "lotto_winningnumber"
         verbose_name = "당첨번호 세트"
         verbose_name_plural = "당첨번호 세트"
 
     def __str__(self):
         return f"{self.round} : {self.numbers} + 보너스({self.bonus})"
+
 
 class UserTicket(models.Model):
     round = models.ForeignKey(
@@ -52,7 +56,7 @@ class UserTicket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="구매 시각")
 
     class Meta:
-        db_table = "lotto_lottoticket"    
+        db_table = "lotto_lottoticket"
         unique_together = ("round", "name", "numbers")
         ordering = ["-created_at"]
         verbose_name = "사용자 티켓"
